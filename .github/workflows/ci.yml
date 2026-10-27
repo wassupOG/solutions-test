@@ -1,0 +1,47 @@
+name: Quality
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17.9-bookworm
+        env:
+          POSTGRES_USER: business_card
+          POSTGRES_PASSWORD: ci_only_password
+          POSTGRES_DB: business_card_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd 'pg_isready -U business_card -d business_card_test'
+          --health-interval 3s --health-timeout 3s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgresql://business_card:ci_only_password@localhost:5432/business_card_test?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run db:generate
+      - run: npm run verify
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run test:integration
+      - name: Clean Docker startup
+        run: docker compose up --build --wait --wait-timeout 180
+      - run: npm run smoke
+      - name: Restart with persisted data
+        run: |
+          docker compose restart app
+          docker compose up --wait --wait-timeout 90
+          npm run smoke
+      - name: Container logs
+        if: failure()
+        run: docker compose logs --tail=100
+      - name: Cleanup
+        if: always()
+        run: docker compose down -v

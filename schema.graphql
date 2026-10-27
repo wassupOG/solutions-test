@@ -1,0 +1,92 @@
+"""
+Employment history, ordered by start month descending.
+"""
+type Experience {
+  """
+  Selected achievements from the CV, in presentation order.
+  """
+  achievements: [String!]!
+  company: String!
+  description: String!
+
+  """
+  Last month, formatted YYYY-MM; null means current employment.
+  """
+  endMonth: String
+  id: ID!
+  position: String!
+
+  """
+  First month, formatted YYYY-MM. The source CV does not specify a day.
+  """
+  startMonth: String!
+}
+
+"""
+A public professional resource or contact.
+"""
+type ProfessionalLink {
+  id: ID!
+  label: String!
+
+  """
+  HTTPS URL supplied by the profile owner.
+  """
+  url: String!
+}
+
+"""
+Ilya Naumov’s public professional business card.
+"""
+type Profile {
+  description: String!
+  experience: [Experience!]!
+  headline: String!
+  id: ID!
+  links: [ProfessionalLink!]!
+  name: String!
+  projects: [Project!]!
+  skills: [Skill!]!
+}
+
+"""
+A publicly accessible product and the candidate’s personal contribution.
+"""
+type Project {
+  """
+  The candidate’s contribution; does not imply sole ownership of the product.
+  """
+  contribution: String!
+  description: String!
+  id: ID!
+  name: String!
+
+  """
+  Technologies confirmed for this project, fetched in a batch when selected.
+  """
+  skills: [Skill!]!
+
+  """
+  Public product URL; commercial source repositories are private.
+  """
+  url: String!
+}
+
+type Query {
+  """
+  Get the public profile. Related collections are loaded only when selected.
+  """
+  profile: Profile!
+}
+
+"""
+A technology used in professional work; no self-assigned proficiency scores.
+"""
+type Skill {
+  """
+  Technology category: Language, Backend, Data, Frontend, Infrastructure or Testing.
+  """
+  category: String!
+  id: ID!
+  name: String!
+}

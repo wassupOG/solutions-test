@@ -1,0 +1,40 @@
+# Smallest useful request: reads only the Profile table.
+query Introduction {
+  profile {
+    name
+    headline
+    links {
+      label
+      url
+    }
+  }
+}
+
+# Project skills are batched across the entire project list.
+query Projects {
+  profile {
+    projects {
+      name
+      url
+      contribution
+      skills {
+        name
+        category
+      }
+    }
+  }
+}
+
+# Dates retain the CV's YYYY-MM precision; endMonth: null means current work.
+query Career {
+  profile {
+    experience {
+      company
+      position
+      startMonth
+      endMonth
+      description
+      achievements
+    }
+  }
+}

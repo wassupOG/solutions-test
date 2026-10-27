@@ -1,0 +1,26 @@
+# Create a Blueprint from this repository. These compute resources are paid;
+# review Render's current pricing before applying. No resources are provisioned locally.
+services:
+  - type: web
+    name: ilya-naumov-business-card
+    runtime: docker
+    plan: 0.5c-512mb
+    region: frankfurt
+    healthCheckPath: /health/ready
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: business-card-db
+          property: connectionString
+      - key: DEMO_SANDBOX
+        value: 'true'
+      - key: TRUST_PROXY_HOPS
+        value: '1'
+databases:
+  - name: business-card-db
+    plan: 0.1c-256mb
+    region: frankfurt
+    diskSizeGB: 1
+    ipAllowList: []
+    databaseName: business_card
+    user: business_card
