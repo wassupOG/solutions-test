@@ -23,7 +23,8 @@
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "verify": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
     "schema:export": "npm run build && node scripts/export-schema.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "build:vercel": "npm run build && node scripts/prepare-vercel-database.mjs"
   },
   "dependencies": {
     "@apollo/server": "5.5.1",

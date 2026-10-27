@@ -8,6 +8,7 @@ src/generated/
 *.tsbuildinfo
 *.log
 .DS_Store
+.vercel/
 # Private source material, retained locally.
 fullstack_cv.md
 test-task-spec.md
