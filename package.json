@@ -1,0 +1,81 @@
+{
+  "name": "digital-business-card",
+  "version": "1.0.0",
+  "description": "Ilya Naumov's GraphQL business card — NestJS, Prisma and PostgreSQL",
+  "author": "Ilya Naumov",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "prisma generate && nest build",
+    "start": "npm run build && npm run start:prod",
+    "start:dev": "nest start --watch",
+    "start:prod": "sh scripts/start.sh",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx src/database/seed.ts",
+    "db:prepare": "npm run db:migrate && npm run db:seed",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src test scripts --deny-warnings",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build",
+    "schema:export": "npm run build && node scripts/export-schema.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@apollo/server": "5.5.1",
+    "@as-integrations/express5": "1.1.2",
+    "@graphile/depth-limit": "0.4.0",
+    "@nestjs/apollo": "14.0.3",
+    "@nestjs/common": "12.2.0",
+    "@nestjs/core": "12.2.0",
+    "@nestjs/graphql": "14.0.3",
+    "@nestjs/platform-express": "12.2.0",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "dataloader": "2.2.3",
+    "dotenv": "18.0.9",
+    "express": "5.3.0",
+    "express-rate-limit": "8.7.1",
+    "graphql": "16.14.2",
+    "graphql-query-complexity": "2.0.0",
+    "helmet": "8.3.0",
+    "pg": "8.23.1",
+    "pino-http": "11.0.0",
+    "prisma": "7.10.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2",
+    "zod": "4.6.7"
+  },
+  "engines": {
+    "node": ">=24.15.0 <25",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.6.2",
+  "devDependencies": {
+    "@nestjs/cli": "12.0.10",
+    "@nestjs/schematics": "12.0.4",
+    "@nestjs/testing": "12.2.0",
+    "@swc/core": "1.16.20",
+    "@types/express": "5.0.6",
+    "@types/node": "24.19.2",
+    "@types/pg": "8.23.1",
+    "@types/supertest": "7.2.1",
+    "oxlint": "1.90.0",
+    "prettier": "3.9.10",
+    "supertest": "7.3.1",
+    "tsx": "4.23.15",
+    "typescript": "6.0.2",
+    "unplugin-swc": "2.0.0",
+    "vitest": "4.1.12"
+  },
+  "overrides": {
+    "@nestjs/graphql": {
+      "@graphql-tools/utils": "12.0.2"
+    },
+    "multer": "2.5.0"
+  }
+}

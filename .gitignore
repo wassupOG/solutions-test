@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+src/generated/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+*.log
+.DS_Store
+# Private source material, retained locally.
+fullstack_cv.md
+test-task-spec.md

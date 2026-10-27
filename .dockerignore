@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.env*
+!.env.example
+coverage
+src/generated
+fullstack_cv.md
+test-task-spec.md
+AGENTS.md
+*.log
