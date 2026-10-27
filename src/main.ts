@@ -14,6 +14,9 @@ async function bootstrap() {
   const environment = app.get<Environment>(ENVIRONMENT);
   configureHttp(app, environment);
   app.enableShutdownHooks();
-  await app.listen(environment.PORT, '0.0.0.0');
+  await app.listen(environment.PORT);
 }
-await bootstrap();
+
+// Vercel captures listen() while loading this module. Keep ESM evaluation free
+// to finish so the platform can attach its listener to the Nest HTTP server.
+void bootstrap();
